@@ -2,23 +2,49 @@
 <html lang="fi">
 <head>
   <meta charset="UTF-8">
-  <link href="https://fonts.cdnfonts.com/css/digital-7" rel="stylesheet">
+
 
   <title>Onnenpyörä</title>
   <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      font-family: 'Comic Sans MS', cursive, sans-serif;
-      background-image: url('background.png');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+    /* Comic Neue Regular */
+    @font-face {
+    font-family: 'ComicNeue';
+    src: url('fonts/ComicNeue-Regular.woff2') format('woff2'),
+        url('fonts/ComicNeue-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
     }
+
+    /* Comic Neue Bold */
+    @font-face {
+    font-family: 'ComicNeue';
+    src: url('fonts/ComicNeue-Bold.woff2') format('woff2'),
+        url('fonts/ComicNeue-Bold.woff') format('woff');
+    font-weight: 700;
+    font-style: normal;
+    }
+
+    @font-face {
+    font-family: 'Digital7';
+    src: url('fonts/digital-7.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    }
+
+    html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'ComicNeue', sans-serif;
+    background-image: url('background.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    }
+
 
     .container {
       text-align: center;
@@ -54,7 +80,7 @@
       border: 3px solid #444;
       border-radius: 4px;
       font-size: 18px;
-      font-family: 'Comic Sans MS', cursive, sans-serif;
+      font-family: 'ComicNeue', sans-serif;
       text-transform: uppercase;
     }
 
@@ -65,7 +91,7 @@
       border: 3px solid #444;
       border-radius: 4px;
       font-size: 18px;
-      font-family: 'Comic Sans MS', cursive, sans-serif;
+      font-family: 'ComicNeue', sans-serif;
       text-transform: uppercase;
       resize: none;
       width: 20ch;
@@ -83,15 +109,6 @@
       border-radius: 4px;
       cursor: pointer;
     }
-
-    /*
-    #gameLayout 
-      display: flex;
-      gap: 60px;
-      justify-content: center;
-      align-items: flex-start;
-    }
-    */
 
     /* Pelinäkymä */
     #gameView {
@@ -207,7 +224,7 @@
   height: 60px;
   background-color: black;
   color: #ffcc00;
-  font-family: 'Digital-7', monospace;
+  font-family: 'Digital7', monospace;
   font-size: 48px;
   text-align: right;
   padding-right: 20px;
@@ -222,20 +239,6 @@
   border-radius: 6px;
 }
 
-/*
-#wheelArea {
-  max-height: 60vh; 
-  position: relative;
-  width: fit-content;
-  height: fit-content;
-}
-
-#wheelImage {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-*/
 
 #wheelWrapper {
     position: relative;
@@ -263,22 +266,6 @@
     object-fit: contain;
 }
 
-
-/* Valkoinen läpinäkyvä ympyrä 
-#wheelCircle {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(255,255,255,0);
-  border-radius: 50%;
-  border: 3px dashed #ffffff00;
-  top: 0;
-  left: 0;
-  z-index: 1;
-}
-*/
-
-
 /* PNG-nuoli */
 #wheelPointer {
   position: absolute;
@@ -295,25 +282,6 @@
   display: block;
 }
 
-/* Toimintonappien kontti
-#actionButtons {
-  width: var(--wordgrid-width); 
-  flex: 1; 
-  margin-top: 30px;
-  display: flex;
-  gap: 20px;
-  justify-content: center;
-} 
-
-#wordGrid .grid {
-  display: grid;
-  grid-template-columns: repeat(13, 50px);
-  grid-template-rows: repeat(4, 60px);
-  gap: 4px;
-  --wordgrid-width: 800px; 
-  width: var(--wordgrid-width);
-}
-*/
 
 #wordGrid {
   --wordgrid-width: 780px;   /* ⭐ nyt actionButtons näkee tämän */
@@ -411,7 +379,7 @@
     border: 3px solid #444;
     border-radius: 4px;
     cursor: pointer;
-    font-family: 'Comic Sans MS', cursive, sans-serif;
+    font-family: 'ComicNeue', sans-serif;
     text-transform: uppercase;
     transition: transform 0.1s ease;
 }
@@ -483,7 +451,7 @@
   flex-direction: row;        /* ⭐ kaikki yhdelle riville */
 
   width: 100%;
-  font-family: 'Comic Sans MS', cursive;
+  font-family: 'ComicNeue', sans-serif;
 
   transform: scale(0);
   opacity: 0;
@@ -506,7 +474,7 @@
   text-align: center;
   border: 3px solid #c9a400;
   border-radius: 6px;
-  font-family: 'Comic Sans MS', cursive;
+  font-family: 'ComicNeue', sans-serif;
   text-transform: uppercase;
   background: white;
 }
@@ -519,7 +487,7 @@
   border: 3px solid #444444;
   border-radius: 6px;
   cursor: pointer;
-  font-family: 'Comic Sans MS', cursive, sans-serif;
+  font-family: 'ComicNeue', sans-serif;
   text-transform: uppercase;
   transition: transform 0.1s ease;
 }
@@ -544,7 +512,7 @@
   color: #fff;
   text-shadow: 2px 2px 4px #000;
   opacity: 0.8;
-  font-family: 'Comic Sans MS', cursive;
+  font-family: 'ComicNeue', sans-serif;
 }
 
 .solutionButtons {
@@ -702,7 +670,7 @@
 }
 
 .playerTotalScore {
-    font-family: 'Comic Sans MS', cursive;
+    font-family: 'ComicNeue', sans-serif;
     font-size: 20px;              /* pienempi kuin nimi */
     color: #333333;               /* ⭐ uusi väri */
     text-align: right;            /* tasattu oikealle */
