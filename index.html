@@ -320,7 +320,7 @@
   align-items: center;
 
   font-family: Arial, sans-serif;
-  font-size: 40px;
+  font-size: 50px;
 
   /* Piilotetaan kirjain aluksi */
   color: transparent;
@@ -336,6 +336,7 @@
 /* Kun kirjain on paljastettu flipin jälkeen */
 .cell .fill.revealed {
   color: #003366; /* tai musta, riippuen taustasta */
+  font-size: 50px;
 }
 
 /* Flip-animaatio */
@@ -357,7 +358,6 @@
     align-items: stretch;
     justify-content: space-between;
 }
-
 
 
 
@@ -582,7 +582,7 @@
 
 /* Player name */
 .podiumName {
-    font-size: 24px;
+    font-size: 40px;
     font-weight: 700;
     margin-bottom: 4px;
     color: white;
@@ -590,7 +590,7 @@
 
 /* Player score */
 .podiumScore {
-    font-size: 18px;
+    font-size: 24px;
     margin-bottom: 10px;
     opacity: 0.9;
     color: white;
@@ -717,6 +717,239 @@
     cursor: default;
 }
 
+/* Toggle container */
+.toggle {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Boldattu teksti */
+.toggle .labelText {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+/* Piilotetaan varsinainen checkbox */
+.toggle input {
+  display: none;
+}
+
+/* Sliderin tausta + musta border */
+.toggle .slider {
+  width: 50px;
+  height: 26px;
+  background: #bbb;
+  border-radius: 30px;
+  border: 2px solid black;   /* ⭐ MUSTA BORDER */
+  position: relative;
+  transition: background 0.3s ease;
+}
+
+/* Liukuva pallo */
+.toggle .slider::before {
+  content: "";
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  background: white;
+  border-radius: 50%;
+  top: 2px;
+  left: 2px;
+  transition: transform 0.3s ease;
+}
+
+/* Kun toggle on päällä */
+.toggle input:checked + .slider {
+  background: #4caf50;
+}
+.toggle input:checked + .slider::before {
+  transform: translateX(24px);
+}
+
+#introScreen {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  color: white;
+  display: none; /* piilossa aluksi */
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  z-index: 9999;
+  font-size: 2rem;
+  text-align: center;
+}
+
+#introScreen.active {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: visible; 
+    }
+
+#introScreen .introContent {
+  animation: fadeIn 0.6s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.introPlayBtn {
+  margin-top: 20px;
+  padding: 12px 28px;
+  font-size: 1.4rem;
+  font-weight: bold;
+  border: 2px solid white;
+  background: transparent;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.introPlayBtn:hover {
+  background: white;
+  color: black;
+}
+
+/* Intro-animaation näkymä */
+#introAnimationView {
+    display: none; /* näkyviin vasta kun animaatio alkaa */
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 40px;
+    margin-top: 40px;
+}
+
+/* Rivi 10 solua */
+.introLetterRow {
+    display: flex;
+    gap: 0px;
+}
+
+.introLetterCell {
+    width: 80px;
+    height: 110px;
+    background: #009CFF;
+    outline: 6px solid #FF0000;
+    box-sizing: border-box;
+    display: block;
+
+    /* ⭐ Tämä poistaa tuplaborderin ja välin 100 % varmasti */
+    margin-left: -6px;
+}
+
+.introLetterCell:first-child {
+    margin-left: 0;
+}
+
+@keyframes flashGrey {
+    0%   { background: #00346B; }
+    50%  { background: #777777; }
+    100% { background: #00346B; }
+}
+
+.introLetterCell .fill.flash {
+    animation: flashGrey 0.25s ease;
+}
+
+
+.introLetterCell {
+  width: 55px;
+  height: 75px;
+  border: 4px solid red;
+  margin-right: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.introLetterCell:last-child { 
+  margin-right: 0; 
+}
+
+.introLetterCell .fill {
+  width: 100%;
+  height: 100%;
+  background: #003366;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* margin-right: 1px; */
+
+  font-family: Arial, sans-serif;
+  font-size: 50px;
+  font-weight: bold;
+
+  color: transparent;
+
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  transform-origin: center;
+
+  transition: background 0.25s ease;
+}
+
+
+
+.introLetterCell .fill.revealed {
+  color: #003366;
+  background: white;
+}
+
+.introLetterCell .fill.flip {
+  animation: flipReveal 0.696s ease-in-out forwards;
+}
+
+@keyframes flipReveal {
+  0%   { transform: rotateY(0deg); }
+  50%  { transform: rotateY(90deg); }
+  100% { transform: rotateY(0deg); }
+}
+
+.introBounce {
+    animation: introRowBounce 0.5s ease-out;
+}
+
+@keyframes introRowBounce {
+    0%   { transform: translateY(0); }
+    30%  { transform: translateY(-18px); }
+    60%  { transform: translateY(6px); }
+    100% { transform: translateY(0); }
+}
+
+
+#introWheel {
+    width: 500px;      /* alkuperäinen koko */
+    height: auto;
+    transform-origin: center center;   /* ⭐ skaalaus keskeltä */
+    transform: scale(0.1);             /* ⭐ alkaa pienestä */
+    opacity: 0;
+    transition: transform 1.2s ease-out, opacity 1.2s ease-out;
+}
+
+/* Kun animaatio alkaa */
+#introWheel.animate {
+    transform: scale(1);   /* ⭐ kasvaa täyteen kokoon */
+    opacity: 1;
+}
+
+@keyframes wheelSpin {
+    0%   { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+#wheelInner.wheelSpinning {
+    animation: wheelSpin 1.2s linear infinite;
+}
+
 
 
   </style>
@@ -747,13 +980,61 @@
             <textarea id="answer3" class="input-long" maxlength="52" placeholder="Vastaus 3"></textarea>
             </div>
 
-            <button id="playButton">PELAA</button>
+            <label class="toggle">
+                <input type="checkbox" id="showIntro">
+                <span class="slider"></span>
+                <span class="labelText">NÄYTÄ ALKUTUNNARI</span>
+            </label>      
+
+            <button class="actionBtn" id="aloitaButton">ALOITA</button>
     </div>
+
+    <!-- introStartScreen -->
+    <div id="introScreen">
+        <button id="introPlayButton" class="introPlayBtn"> PLAY </button>
+    </div>
+    
+    <div id="introAnimationView">
+        <div class="introLetterRow">
+            <div class="introLetterCell">
+                <div class="fill"></div>
+            </div>
+            <div class="introLetterCell">
+                <div class="fill"></div>
+            </div>
+            <div class="introLetterCell">
+                <div class="fill"></div>
+            </div>
+            <div class="introLetterCell">
+                <div class="fill"></div>
+            </div>
+            <div class="introLetterCell">
+                <div class="fill"></div>
+            </div>
+            <div class="introLetterCell">
+                <div class="fill"></div>
+            </div>
+            <div class="introLetterCell">
+                <div class="fill"></div>
+            </div>
+            <div class="introLetterCell">
+                <div class="fill"></div>
+            </div>
+            <div class="introLetterCell">
+                <div class="fill"></div>
+            </div>
+            <div class="introLetterCell">
+                <div class="fill"></div>
+            </div>            
+        </div>
+        
+
+        <img id="introWheel" src="onnenpyora.png" alt="Onnenpyörä">
+    </div>
+    
 
     <!-- Pelinäkymä -->
     <div id="gameView">
-
-
 
         <!-- ⭐ PELAAJAPALKIN LISÄYS TÄHÄN -->
         <div id="playerBar">
@@ -891,6 +1172,246 @@
 
     let currentTaskIndex = 0;   // 0 = tehtävä 1, 1 = tehtävä 2, 2 = tehtävä 3
 
+    //Tallennetaan alkudemo asetus
+    const showIntro = document.getElementById('showIntro').checked;
+
+    // ALOITA-nappi
+    document.getElementById('aloitaButton').addEventListener('click', function () {
+
+        const showIntro = document.getElementById('showIntro').checked;
+
+        if (showIntro) {
+            showIntroScreen();   // Näytä intro + PLAY-nappi
+        } else {
+            startGameNow();      // Suoraan peliin
+        }
+    });
+
+
+    // 1) Näytä introScreen ja PLAY-nappi
+    function showIntroScreen() {
+
+        // Piilota asetussivu
+        document.getElementById('setupView').style.display = 'none';
+
+        // Näytä introScreen
+        const intro = document.getElementById('introScreen');
+        intro.classList.add('active');
+
+        // PLAY-nappi käynnistää animaation
+        document.getElementById('introPlayButton').onclick = () => {
+            playIntroAnimation();
+        };
+    }
+
+
+    // 2) PLAY → piilota intro ja aloita animaatio
+    function playIntroAnimation() {
+
+        // Piilota PLAY-nappi ja tekstit
+        document.querySelector('#introScreen .introPlayBtn').style.display = 'none';
+
+        // Poista musta tausta
+        document.getElementById('introScreen').classList.remove('active');
+
+        // Näytä animaationäkymä
+        document.getElementById('introAnimationView').style.display = 'flex';
+
+        victorySound.currentTime = 0;
+        victorySound.play();
+
+        setTimeout(() => {
+            stopWheelSpin();
+            document.getElementById('introAnimationView').style.display = 'none';
+            startGameNow(); 
+
+        }, 22000); 
+
+        // ⭐ Käynnistä pyörän skaalausanimaatio 
+        const wheel = document.getElementById('introWheel'); 
+        requestAnimationFrame(() => { 
+            wheel.classList.add('animate');
+            
+            flashCellsSequence();
+
+            setTimeout(() => {
+                wheel.style.transition = "none";
+                startWheelSpin();
+            }, 1200);    
+        });
+
+
+    }
+
+    let wheelRotation = 0;
+    let wheelSpinning = false;
+
+function startWheelSpin() {
+    const wheel = document.getElementById("introWheel");
+    wheelSpinning = true;
+    rotateWheel();
+}
+
+function stopWheelSpin() {
+    wheelSpinning = false;
+}
+
+function rotateWheel() {
+    if (!wheelSpinning) return;
+
+    wheelRotation += 1; // ⭐ pyörimisnopeus (asteina per frame)
+    const wheel = document.getElementById("introWheel");
+
+    wheel.style.transform = `rotate(${wheelRotation}deg)`; 
+
+    requestAnimationFrame(rotateWheel);
+}
+
+
+
+    function flashCellsSequence() {
+
+                const cells = Array.from(
+                    document.querySelectorAll('#introAnimationView .introLetterCell')
+                );
+
+                // ============================
+                // 1) VÄLÄHDYS VASEMMALTA OIKEALLE
+                // ============================
+
+                let index = 0;
+
+                const forward = setInterval(() => {
+
+                    if (index >= cells.length) {
+                        clearInterval(forward);
+                        startBackwardFlash();
+                        return;
+                    }
+
+                    const currentIndex = index;
+                    const fill = cells[currentIndex].querySelector('.fill'); // ⭐ tärkeä
+
+                    fill.classList.add('flash');
+                    setTimeout(() => fill.classList.remove('flash'), 250);
+
+                    index++;
+
+                }, 120);
+
+
+                // ============================
+                // 2) VÄLÄHDYS OIKEALTA VASEMMALLE
+                // ============================
+
+                function startBackwardFlash() {
+
+                    let backIndex = cells.length - 1;
+                    
+                    const backward = setInterval(() => {
+
+                        if (backIndex < 0) {
+                            clearInterval(backward);
+                            fadeToGreyLeftToRight();
+                            return;
+                        }
+
+                        const currentBackIndex = backIndex;
+                        const fill = cells[currentBackIndex].querySelector('.fill'); // ⭐ tärkeä
+
+                        fill.classList.add('flash');
+                        setTimeout(() => fill.classList.remove('flash'), 250);
+
+                        backIndex--;
+
+                    }, 120);
+                }
+
+
+                // ============================
+                // 3) SOLUJEN HARMAANTUMINEN VASEMMALTA OIKEALLE
+                // ============================
+
+                function fadeToGreyLeftToRight() {
+
+                    let greyIndex = 0;
+
+                    const greyer = setInterval(() => {
+
+                        if (greyIndex >= cells.length) {
+                            clearInterval(greyer);
+                            flipIntroCellsRandom(); // ⭐ flip alkaa vasta kun kaikki harmaita
+                            return;
+                        }
+
+                        const fill = cells[greyIndex].querySelector('.fill'); // ⭐ tärkeä
+                        fill.style.backgroundColor = '#777777';
+
+                        greyIndex++;
+
+                    }, 120);
+                }
+        }
+
+
+        function flipIntroCellsRandom() {
+
+            const cells = Array.from(
+                document.querySelectorAll('#introAnimationView .introLetterCell')
+            );
+
+            const letters = ["O","N","N","E","N","P","Y","Ö","R","Ä"];
+            const flipDuration = 696;
+
+            const order = [...Array(cells.length).keys()]
+                .sort(() => Math.random() - 0.5);
+
+            order.forEach((cellIndex, i) => {
+
+                const cell = cells[cellIndex];
+                const fill = cell.querySelector(".fill");
+
+                setTimeout(() => {
+
+                    // ⭐ Nollataan harmaannus
+                    fill.style.backgroundColor = "#003366";
+                    fill.style.color = "transparent";
+
+                    // Aloita flip
+                    fill.classList.add("flip");
+
+                    // ⭐ Flipin puolivälissä paljastetaan kirjain
+                    setTimeout(() => {
+                        fill.textContent = letters[cellIndex];
+                        fill.classList.add("revealed");
+
+                        // ⭐ Tässä kohtaa tausta muuttuu valkoiseksi
+                        fill.style.backgroundColor = "white";
+                        fill.style.color = "#003366";
+                    }, flipDuration / 2);
+
+                    // Poista flip-luokka lopuksi
+                    setTimeout(() => {
+                        fill.classList.remove("flip");
+
+                        // ⭐ Kun viimeinen kirjain on flipattu → bounce koko riville 
+                        if (i === order.length - 1) { 
+                            const row = document.querySelector('#introAnimationView .introLetterRow'); 
+                            row.classList.add('introBounce'); 
+                            
+                            // Poistetaan luokka, jotta animaatio voi toistua myöhemmin 
+                            setTimeout(() => row.classList.remove('introBounce'), 600); 
+                        }
+
+                    }, flipDuration);
+
+                }, i * flipDuration);
+            });
+        }
+
+
+
+
 
 
     //showVictoryScreen(); //Testi victoryScreenille
@@ -910,7 +1431,7 @@
     // ⭐ Erikoismerkit, jotka näytetään heti (ei piiloteta)
     const autoRevealChars = "-&/!?.,:;()";
     
-    document.getElementById('playButton').addEventListener('click', function () {
+    function startGameNow() {
 
         // Pelaajat
         players = [
@@ -926,21 +1447,17 @@
             document.getElementById('topic3').value.trim()
         ];
 
-        // Vastaukset (1–4 riviä per tehtävä sallittu)
+        // Vastaukset
         answers = [
             document.getElementById('answer1').value,
             document.getElementById('answer2').value,
             document.getElementById('answer3').value
         ];
 
-        // Näkymän vaihto OLD
-        //document.getElementById('setupView').style.display = 'none';
-        //document.getElementById('gameView').style.display = 'block';
-
-// Näkymän vaihto
-document.getElementById('setupView').style.display = 'none';
-document.getElementById('gameView').classList.add('active');
-
+        // Näkymän vaihto
+        document.getElementById('setupView').style.display = 'none';
+        //document.getElementById('infoScreen').classList.remove('active');
+        document.getElementById('gameView').classList.add('active');
 
         // Pelaajien nimet UI:hin
         document.getElementById("p1name").textContent = players[0].toUpperCase();
@@ -953,12 +1470,10 @@ document.getElementById('gameView').classList.add('active');
         // Pelaaja 1 aloittaa
         setActivePlayer(0);
 
-        // ⭐ Lataa tehtävä 1 sanatauluun (fillRow + resetBoard)
+        // ⭐ Lataa tehtävä 1 sanatauluun
         startNewTask();
+    }
 
-        //showVictoryScreen();
-
-    });
 
 
     
@@ -1134,7 +1649,7 @@ document.getElementById('gameView').classList.add('active');
                     fill.style.backgroundColor = "white";
                     fill.style.fontFamily = "Arial, sans-serif";
                     fill.style.fontWeight = "bold";
-                    fill.style.fontSize = "40px";
+                    fill.style.fontSize = "50px";
 
                     playFoundDing();
                 }, flipDuration / 2);
