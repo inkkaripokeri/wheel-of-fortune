@@ -1394,38 +1394,78 @@
     document.getElementById("taskManagerButton").addEventListener("click", loadExampleTasks);
 
 
-    async function loadExampleTasks() {
-        try {
-            //const response = await fetch("tasks.json");
-            const response = await fetch("https://inkkaripokeri.github.io/wheel-of-fortune/tasks.json");
-            const tasks = await response.json();
+    function loadExampleTasks() {
 
-            // Ota 3 ensimmäistä
-            const firstThree = tasks.slice(0, 3);
+        // ⭐ Kovakoodatut tehtävät
+        const tasks = [
+            { kategoria: "ELOKUVAT", tehtava: "BRAD PITT EI NÄYTELLYT BATMANIA" },
+            { kategoria: "LUONNONTIEDE", tehtava: "ENTOMOLOGI TUTKII HYÖNTEISIÄ" },
+            { kategoria: "ESINEET JA ASIAT", tehtava: "TUULIKANNELTA SANOTAAN MYÖS AIOLOKSEN HARPUKSI" },
+            { kategoria: "USKOMUS", tehtava: "JALKAPOHJIEN KUTINA ENNUSTAA MATKAA" },
+            { kategoria: "YLEISTIETO", tehtava: "KULUTUSMAITO ON NYKYÄÄN TÄYSMAITOA" },
+            { kategoria: "MUSIIKKI", tehtava: "TÄHTIKAAREN TAA ON AIKAKONEEN ESIKOISALBUMI" },
+            { kategoria: "LUONNONTIEDE", tehtava: "KÄENKAALI TUNNETAAN MYÖS KETUNLEIPÄNÄ" },
+            { kategoria: "AJANKOHTAISUUS", tehtava: "TULEVANA SUNNUNTAINA VIETETÄÄN ISÄNPÄIVÄÄ" },
+            { kategoria: "KIRJALLISUUS", tehtava: "INTRIGI ON ROMAANIN JUONI" },
+            { kategoria: "LUONNONTIEDE", tehtava: "AMPUHAUKKA ON SUOMEN PIENIN HAUKKA" },
+            { kategoria: "LUONNONTIEDE", tehtava: "NEPTUNUKSELLA ON KAHDEKSAN KUUTA" },
+            { kategoria: "HISTORIA", tehtava: "GRÖNLANNIN LÖYSI ERIK PUNAINEN" },
+            { kategoria: "URHEILU", tehtava: "ELMO EDUSTAA KAINALNIEMEN HIKEÄ" },
+            { kategoria: "YLEISTIETO", tehtava: "CHIANTI ON VIINI ITALIAN VUORISTOSTA" },
+            { kategoria: "JOULU", tehtava: "JOULUKORTTIEN KOTIMAA ON ENGLANTI" },
+            { kategoria: "SANONTA", tehtava: "TYHJÄÄ TÄYNNÄ JA PIMEÄTÄ PUOLILLAA" },
+            { kategoria: "YLEISTIETO", tehtava: "AHTOJÄÄ ON PAHA MERENKULUN ESTE" },
+            { kategoria: "MUSIIKKI", tehtava: "HUULIHARPPU ON MAAILMAN MYYDYIN INSTRUMENTTI" },
+            { kategoria: "USKOMUS", tehtava: "JOS ON USVA UUNNA VUONNA NIIN ON HALLA HEINÄKUUSSA" },
+            { kategoria: "LÄÄKETIEDE", tehtava: "MALARIA ON TROOPPINEN KUUMETAUTI" }
+        ];
 
-            // Funktio joka keskittää ja rajoittaa 13 merkkiin
-            const formatText = (txt) => {
-                const trimmed = txt.substring(0, 13);
-                const padding = Math.max(0, 13 - trimmed.length);
-                const left = Math.floor(padding / 2);
-                const right = padding - left;
-                return " ".repeat(left) + trimmed + " ".repeat(right);
-            };
+        // ⭐ Arvotaan 3 tehtävää
+        const selected = tasks.sort(() => Math.random() - 0.5).slice(0, 3);
 
-            // Täytä kentät
-            document.getElementById("topic1").value = formatText(firstThree[0].kategoria);
-            document.getElementById("answer1").value = formatText(firstThree[0].tehtava);
+        // ⭐ Aiheen keskitys
+        const formatTopic = (txt) => {
+            const trimmed = txt.substring(0, 13);
+            const padding = Math.max(0, 13 - trimmed.length);
+            const left = Math.floor(padding / 2);
+            const right = padding - left;
+            return " ".repeat(left) + trimmed + " ".repeat(right);
+        };
 
-            document.getElementById("topic2").value = formatText(firstThree[1].kategoria);
-            document.getElementById("answer2").value = formatText(firstThree[1].tehtava);
+        // ⭐ Rivinvaihto 1–4 riviin, max 13 merkkiä per rivi
+        const splitAnswerIntoRows = (answer) => {
+            const words = answer.split(" ");
+            const rows = ["", "", "", ""];
+            let rowIndex = 0;
 
-            document.getElementById("topic3").value = formatText(firstThree[2].kategoria);
-            document.getElementById("answer3").value = formatText(firstThree[2].tehtava);
+            for (let word of words) {
+                if (rows[rowIndex].length + word.length + (rows[rowIndex] ? 1 : 0) > 13) {
+                    rowIndex++;
+                    if (rowIndex > 3) break;
+                }
+                rows[rowIndex] += (rows[rowIndex] ? " " : "") + word;
+            }
 
-        } catch (err) {
-            console.error("Tehtävien lataus epäonnistui:", err);
-        }
+            return rows;
+        };
+
+        // ⭐ Täytetään aiheet
+        document.getElementById("topic1").value = formatTopic(selected[0].kategoria);
+        document.getElementById("topic2").value = formatTopic(selected[1].kategoria);
+        document.getElementById("topic3").value = formatTopic(selected[2].kategoria);
+
+        // ⭐ Rivitetään vastaukset
+        const rows1 = splitAnswerIntoRows(selected[0].tehtava);
+        const rows2 = splitAnswerIntoRows(selected[1].tehtava);
+        const rows3 = splitAnswerIntoRows(selected[2].tehtava);
+
+        // ⭐ Yhdistetään rivit yhteen inputtiin
+        document.getElementById("answer1").value = rows1.join("\n");
+        document.getElementById("answer2").value = rows2.join("\n");
+        document.getElementById("answer3").value = rows3.join("\n");
     }
+
+
 
 
 
