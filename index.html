@@ -82,11 +82,28 @@
       text-shadow: 2px 2px 4px #000;
     }
 
+    h5 {
+      font-size: 18px;
+      margin-top: 0px;
+
+      color: black;
+      text-align: left;
+      font-weight: 200;
+      font-style: normal;
+    }
+
     .row {
       display: flex;
       justify-content: center;
       gap: 20px;
       margin-bottom: 20px;
+    }
+
+    .row5 {
+      justify-content: center;
+      display: flex;
+      
+
     }
 
     .input-short {
@@ -129,9 +146,9 @@
 
     /* Pelinäkymä */
     #gameView {
-      /* display: none; */
+      display: none;
       width: 100%;
-      padding: 40px;
+      padding: 30px;
       box-sizing: border-box;
       position: relative;
     }
@@ -143,14 +160,22 @@
     overflow: visible; 
     }
 
+/*
+    #gameLayout {
+    flex: 1;            
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+    align-items: center; 
+    overflow: visible;
+    }
+*/
 
     #gameLayout {
-    flex: 1;            /* 🔥 tämä tekee taian */
-    display: flex;
-    gap: 60px;
-    justify-content: center;
-    align-items: center; /* flex-start → center */
-    overflow: visible;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start; /* ⭐ Kohdistaa sanataulun ja pyörän yläreunat */
+        gap: 4vmin; /* valinnainen */
     }
 
 
@@ -213,8 +238,8 @@
   width: 100%;
   display: flex;
   justify-content: center;
-  gap: 80px;
-  margin-bottom: 80px;
+  gap: 60px;
+  margin-bottom: 60px;
   position: relative;           /* varmistaa, että ::before toimii oikein */
 }
 
@@ -263,12 +288,13 @@
     justify-content: center;
     align-items: center;
     overflow: visible;
+    margin-top: 25px;
 }
 
 #wheelArea {
     position: relative;
-    max-height: 70vh;   /* pyörä saa olla enintään 70 % selainikkunan korkeudesta */
-    max-width: 60vh;
+    max-height: 50vh;   /* pyörä saa olla enintään 70 % selainikkunan korkeudesta */
+    max-width: 50vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -304,6 +330,7 @@
   --wordgrid-width: 780px;   /* ⭐ nyt actionButtons näkee tämän */
   width: var(--wordgrid-width);
   margin: 0 auto;            /* ⭐ keskitys */
+  margin-top: 20px;
 }
 
 #wordGrid .grid {
@@ -401,12 +428,6 @@
     transition: transform 0.1s ease;
 }
 
-
-
-
-
-
-
 .actionBtn:hover {
   transform: scale(1.05);
 }
@@ -427,21 +448,70 @@
     position: relative; 
 }
 
-/* Popupin ulkokuori */
-#letterPopup {
-  position: static;               /* ⭐ ei kellu, vaan on normaalissa flowssa */
-  width: var(--wordgrid-width);   /* ⭐ sama leveys kuin sanataululla */
-  margin: 15px auto 0 auto;       /* ⭐ keskitys nappirivin alle */
 
+.actionBtnAsetukset {
+
+    min-width: 0;
+
+    white-space: normal;
+    word-break: break-word;
+    line-height: 1.2;
+    /*
+    max-width: 250px;
+    min-height: 70px;
+*/
+    padding: 10px 20px;
+    font-size: 20px;
+    background-color: #ffcc00;
+    border: 3px solid #444;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'ComicNeue', sans-serif;
+    text-transform: uppercase;
+    transition: transform 0.1s ease;
+}
+
+.actionBtnAsetukset:hover {
+  transform: scale(1.05);
+}
+
+.actionBtnAsetukset:active {
+  transform: scale(0.95);
+}
+
+.actionBtnAsetukset-animation {
+  transition: transform 2s cubic-bezier(0.1, 0.1, 0.1, 1);
+}
+
+/* Popupin ulkokuori 
+#letterPopup {
+  position: flex;                 
+  width: 390px;                   
+  justify-content: flex-start;  
+  margin-top: 20px;
   background: #FB7B32;
   border: 4px solid #444444;
-  border-radius: 12px;
-
+  border-radius: 4px;
   padding: 12px;
   box-sizing: border-box;
-
-  display: none;                  /* ⭐ piilotettu oletuksena */
+  display: none;                  
 }
+*/
+
+#letterPopup {
+  position: fixed;     
+  top: var(--popup-top); 
+  left: var(--leftside-offset);
+  z-index: 9999;
+  display: none;
+  justify-content: flex-start; 
+  align-items: flex-start;
+  background: #FB7B32;
+  border: 3px solid #444444;
+  border-radius: 4px;
+  padding: 12px;
+}
+
 
 /* Otsikko ylhäällä */
 #popupTitle {
@@ -464,10 +534,10 @@
 .popupContent {
   display: flex;              /* ⭐ tekee sisällöstä flex-kontin */
   align-items: center;        /* ⭐ keskittää pystysuunnassa */
-  justify-content: center;    /* ⭐ keskittää vaakasuunnassa */
+  justify-content: flex-start;   /*  ⭐ keskittää vaakasuunnassa */
   flex-direction: row;        /* ⭐ kaikki yhdelle riville */
 
-  width: 100%;
+  width: 390px;
   font-family: 'ComicNeue', sans-serif;
 
   transform: scale(0);
@@ -738,7 +808,7 @@
 .toggleRow {
   display: flex;
   justify-content: center;
-  margin-top: 20px; /* säädä tarvittaessa */
+  margin-top: 40px; /* säädä tarvittaessa */
   margin-bottom: 30px;
 }
 
@@ -983,27 +1053,6 @@
     transition: transform 0.8s ease, opacity 0.8s ease;
 }
 
-
-#introAnimationView.slideOut {
-    transform: translateY(-100vh);
-    opacity: 0;
-}
-
-
-/* GameView tulee alhaalta sisään */
-#gameView {
-    display: block; /* tai flex */
-    transform: translateY(100vh);
-    opacity: 0;
-    transition: transform 0.8s ease, opacity 0.8s ease;
-}
-
-
-#gameView.slideIn {
-    transform: translateY(0);
-    opacity: 1;
-}
-
 /* Koko ruudun overlay */
 .overlay {
   position: fixed;
@@ -1063,6 +1112,7 @@
             </div>
 
             <h2>Tehtävät</h2>
+
             <div class="row">
             <input id="topic1" class="input-short" maxlength="20" placeholder="Aihe 1">
             <input id="topic2" class="input-short" maxlength="20" placeholder="Aihe 2">
@@ -1075,12 +1125,19 @@
             <textarea id="answer3" class="input-long" maxlength="52" placeholder="Vastaus 3"></textarea>
             </div>
 
-            <h3>
-                Tehtävä kirjoitetaan yhteen tekstikenttään, joka sisältää neljä riviä. <br>
-                Rivin vaihto tehdään painamalla Enter. Jokaisella rivillä voi olla enintään 13 merkkiä. <br>
-                Kaikki merkit lasketaan mukaan: kirjaimet, numerot, välilyönnit ja erikoismerkit.<br>
-                Rivien ei tarvitse olla täynnä, mutta yksikään rivi ei saa ylittää merkkirajaa.
-            </h3>
+            <div class="row5">
+                <h5>
+                    Tehtävä kirjoitetaan yhteen tekstikenttään, joka sisältää neljä riviä. <br>
+                    Rivin vaihto painamalla Enter. Jokaisella rivillä voi olla enintään 13 merkkiä. <br>
+                    Kaikki merkit lasketaan mukaan: kirjaimet, välilyönnit ja erikoismerkit.<br>
+                    Rivien ei tarvitse olla täynnä, mutta yksikään rivi ei saa ylittää merkkirajaa.<br>
+                    Tehtävän ei tule sisältää numeroita, koska niitä ei voi arvata.
+                </h5>
+            </div>
+            <div id="taskHeaderRow">
+            <button id="taskManagerButton" class="actionBtnAsetukset">Käytä esimerkkitehtäviä</button>
+            </div>
+
 
             <div class="toggleRow">
                 <label class="toggle">
@@ -1175,46 +1232,15 @@
             </div>
         
         </div>
-
-<!-- OHJEET OVERLAY -->
-<div id="instructionsOverlay" class="overlay">
-  <div class="overlay-content">
-    <button class="close-overlay" id="closeInstructions">×</button>
-
-
-    <h3>PELIN TAVOITE</h3>
-    <p>Kerää pisteitä oikeista konsonanteista ja arvaa piilotettu lause ennen muita pelaajia.</p>
-
-    <h3>Onnenpyörän pyörittäminen</h3>
-    <ul>
-      <li>Voit pyörittää onnenpyörää omalla vuorollasi.</li>
-      <li>Ohi sektorista vuoro siirtyy seuraavalle</li>
-      <li>Rosvosektorista pelaaja menettää tehtävässä kerätyt pisteet ja vuoro siirtyy seuraavalle</li>
-      <li>Jos pyörä pysähtyy pistesektoriin, saat sen osoittaman pistemäärän kerrottuna sillä, montako kertaa valitsemasi konsonantti esiintyy tehtävässä.</li>
-      <li>Vuoro siirtyy seuraavalle pelaajalle, jos valitsemaasi konsonanttia ei löydy tehtävästä.</li>
-    </ul>
-
-    <h3>Vokaalien ostaminen</h3>
-    <p>Vokaalin voi ostaa 300:lla pisteellä. Vokaalista ei saa pisteitä, mutta se auttaa ratkaisussa. Jos vokaalia ei löydy tehtävästä, niin vuoro siirtyy seuraavalle. Vokaalia ei voi ostaa kahta kertaa peräkkäin samalla vuorolla.</p>
-
-    <h3>Tehtävän ratkaiseminen</h3>
-    <p>Voit yrittää ratkaista tehtävän omalla vuorollasi. Oikea ratkaisu päättää kierroksen, väärä siirtää vuoron eteenpäin. Tehtävän ratkaissut pelaaja saa kierroksen aikana keräämänsä pisteet kokonaispisteisiinsä.</p>
-
-    <h3>Pelin voittaminen</h3>
-    <p>Koko pelin voittaa pelaaja, jolla on eniten kokonaispisteitä kolmen tehtävän jälkeen.</p>
-
-    <h3>Vinkkejä pelaamiseen</h3>
-    <p>Arvaa ensin yleisiä konsonantteja (S, T, N, R…).</p>
-    <p>Kerrytä pisteitä varmoilla konsonanteilla ennen ratkaisua — näin saat enemmän kokonaispisteitä koko pelin voittoa ajatellen.</p>
-  </div>
-</div>
-
   
         <!-- ⭐ LISÄYS PÄÄTTYY -->
         <div id="gameLayout">
-            <!-- ⭐ Vasemman puolen kontti -->
-            <div id="leftSide">
-                <div id="topicTitle"></div>
+            
+        <!-- ⭐ Vasemman puolen kontti -->
+        <div id="leftSide">
+                
+            <div id="topicTitle"></div>
+                
                 <div id="wordGrid">
                     <div class="grid">
                         <!-- Rivi 1 -->
@@ -1236,34 +1262,69 @@
                     <button class="actionBtn" id="instructionsButton">OHJEET</button>
                 </div>
 
-                <!-- Popup pysyy actionButtonsin ulkopuolella -->
-                <div id="letterPopup" class="hidden">
-                    <div class="popupContent">
-                        <div class="popupRow">
-                            <p id="popupTitle">Syötä konsonantti:</p>
-                            <input id="consonantInput" maxlength="1">
-                            <button id="popupOkButton">OK</button>
-                        </div>
-                    </div>
-                </div>
-                
-
-
             </div>
             <div id="wheelWrapper">
-
                 <div id="wheelArea">
                     <img id="wheelImage" src="onnenpyora.png">
-
                 </div>
             
                 <div id="wheelPointer">
                     <img src="pointer.png">
                 </div>
-            
             </div>
-             
         </div>
+
+        <!-- Popup pysyy actionButtonsin ulkopuolella -->
+        <div id="letterPopup" class="hidden">
+            <div class="popupContent">
+                <div class="popupRow">
+                    <p id="popupTitle">Syötä konsonantti:</p>
+                    <input id="consonantInput" maxlength="1">
+                    <button id="popupOkButton">OK</button>
+                </div>
+            </div>
+        </div>
+        <div id="fakePopup" class="hidden"></div>
+
+        <!-- OHJEET OVERLAY -->
+        <div id="instructionsOverlay" class="overlay">
+            <div class="overlay-content">
+                <button class="close-overlay" id="closeInstructions">×</button>
+
+
+                <h3>PELIN TAVOITE</h3>
+                <p>Kerää pisteitä oikeista konsonanteista ja arvaa piilotettu lause ennen muita pelaajia.</p>
+
+
+                <h3>Sanataulu toimii näin:</h3>
+                <li>Harmaat ruudut sisältävät tehtävään kuuluvat kirjaimet.</li>
+                <li>Siniset ruudut eivät kuulu tehtävään lainkaan (ne ovat tyhjiä väliruutuja).</li>
+                <li>Erikoismerkit (kuten väliviiva, heittomerkki, piste, pilkku) paljastetaan automaattisesti eikä niitä tarvitse arvata.</li>
+
+                <h3>Onnenpyörän pyörittäminen</h3>
+                <ul>
+                <li>Voit pyörittää onnenpyörää omalla vuorollasi.</li>
+                <li>Ohi sektorista vuoro siirtyy seuraavalle</li>
+                <li>Rosvosektorista pelaaja menettää tehtävässä kerätyt pisteet ja vuoro siirtyy seuraavalle</li>
+                <li>Jos pyörä pysähtyy pistesektoriin, saat sen osoittaman pistemäärän kerrottuna sillä, montako kertaa valitsemasi konsonantti esiintyy tehtävässä.</li>
+                <li>Vuoro siirtyy seuraavalle pelaajalle, jos valitsemaasi konsonanttia ei löydy tehtävästä.</li>
+                </ul>
+
+                <h3>Vokaalien ostaminen</h3>
+                <p>Vokaalin voi ostaa 300:lla pisteellä. Vokaalista ei saa pisteitä, mutta se auttaa ratkaisussa. Jos vokaalia ei löydy tehtävästä, niin vuoro siirtyy seuraavalle. Vokaalia ei voi ostaa kahta kertaa peräkkäin samalla vuorolla.</p>
+
+                <h3>Tehtävän ratkaiseminen</h3>
+                <p>Voit yrittää ratkaista tehtävän omalla vuorollasi. Oikea ratkaisu päättää kierroksen, väärä siirtää vuoron eteenpäin. Tehtävän ratkaissut pelaaja saa kierroksen aikana keräämänsä pisteet kokonaispisteisiinsä.</p>
+
+                <h3>Pelin voittaminen</h3>
+                <p>Koko pelin voittaa pelaaja, jolla on eniten kokonaispisteitä kolmen tehtävän jälkeen.</p>
+
+                <h3>Vinkkejä pelaamiseen</h3>
+                <p>Arvaa ensin yleisiä konsonantteja (S, T, N, R…).</p>
+                <p>Kerrytä pisteitä varmoilla konsonanteilla ennen ratkaisua — näin saat enemmän kokonaispisteitä koko pelin voittoa ajatellen.</p>
+            </div>
+        </div>
+
     </div>
 
 
@@ -1309,6 +1370,63 @@
     let totalScores = [0, 0, 0];  // Pelaajien koko pelin pisteet
 
     let currentTaskIndex = 0;   // 0 = tehtävä 1, 1 = tehtävä 2, 2 = tehtävä 3
+    
+    //document.getElementById('gameView').style.display = 'none';
+
+    //Letterpopup
+    function updateLeftSideOffset() {
+        const leftSide = document.getElementById("leftSide");
+        const rect = leftSide.getBoundingClientRect();
+        document.documentElement.style.setProperty("--leftside-offset", rect.left + "px");
+    }
+    function updatePopupTop() {
+        const buttons = document.getElementById("actionButtons");
+        const rect = buttons.getBoundingClientRect();
+        document.documentElement.style.setProperty("--popup-top", rect.bottom + 10 +"px");
+    }
+    function updatePopupPosition() {
+        updateLeftSideOffset();
+        updatePopupTop();
+    }
+
+    //ESIMERKKITEHTÄVÄT
+
+    document.getElementById("taskManagerButton").addEventListener("click", loadExampleTasks);
+
+
+    async function loadExampleTasks() {
+        try {
+            const response = await fetch("tasks.json");
+            const tasks = await response.json();
+
+            // Ota 3 ensimmäistä
+            const firstThree = tasks.slice(0, 3);
+
+            // Funktio joka keskittää ja rajoittaa 13 merkkiin
+            const formatText = (txt) => {
+                const trimmed = txt.substring(0, 13);
+                const padding = Math.max(0, 13 - trimmed.length);
+                const left = Math.floor(padding / 2);
+                const right = padding - left;
+                return " ".repeat(left) + trimmed + " ".repeat(right);
+            };
+
+            // Täytä kentät
+            document.getElementById("topic1").value = formatText(firstThree[0].kategoria);
+            document.getElementById("answer1").value = formatText(firstThree[0].tehtava);
+
+            document.getElementById("topic2").value = formatText(firstThree[1].kategoria);
+            document.getElementById("answer2").value = formatText(firstThree[1].tehtava);
+
+            document.getElementById("topic3").value = formatText(firstThree[2].kategoria);
+            document.getElementById("answer3").value = formatText(firstThree[2].tehtava);
+
+        } catch (err) {
+            console.error("Tehtävien lataus epäonnistui:", err);
+        }
+    }
+
+
 
     //OHJEET
 
@@ -1342,6 +1460,7 @@
     document.getElementById('aloitaButton').addEventListener('click', function () {
 
         const showIntro = document.getElementById('showIntro').checked;
+        //document.getElementById('gameView').classList.add('active');
 
         if (showIntro) {
             showIntroScreen();   // Näytä intro + PLAY-nappi
@@ -1376,6 +1495,9 @@
 
         // Poista musta tausta
         document.getElementById('introScreen').classList.remove('active');
+
+        // Piilota introScreen
+        document.getElementById('introScreen').style.display = 'none';
 
         // Näytä animaationäkymä
         document.getElementById('introAnimationView').style.display = 'flex';
@@ -1617,13 +1739,26 @@ function rotateWheel() {
             document.getElementById('answer3').value
         ];
 
-        // Näkymän vaihto
-        //document.getElementById('setupView').style.display = 'none';
-        //document.getElementById('gameView').classList.add('active');
-
+        // Näkymän vaihto    
         document.getElementById('setupView').style.display = 'none';
-        document.getElementById('introAnimationView').classList.add('slideOut'); 
-        document.getElementById('gameView').classList.add('slideIn');
+        document.getElementById("introAnimationView").style.display = "none";
+        
+        const gameView = document.getElementById('gameView');
+        gameView.classList.add('active');
+        
+        //document.getElementById('gameView').style.display = 'active';
+        
+        //updatePopupPosition();
+        setTimeout(updatePopupPosition, 100);
+        window.addEventListener("resize", updatePopupPosition);
+
+        //document.getElementById('introAnimationView').classList.add('slideOut'); 
+        //document.getElementById('gameView').classList.add('slideIn');
+        /*
+        setTimeout(() => {
+            document.getElementById("introAnimationView").style.display = "none";
+        }, 1000);  
+        */
 
         // Pelaajien nimet UI:hin
         document.getElementById("p1name").textContent = players[0].toUpperCase();
